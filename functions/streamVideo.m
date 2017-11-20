@@ -4,6 +4,10 @@ function streamVideo(videoStream, resolution, output)
   preview(videoStream, hImage);
 
 function format_video(obj, event, himage)
-    rot_image = flip(event.Data, 2);
-    cut_image = rot_image(:, 80:560, :);
-    set(himage, 'cdata', cut_image);
+  % Rotate frame
+  frame = flip(event.Data, 2);
+  % Crop frame
+  frame = frame(:, 80:560, :);
+  % Place a mark arround each detected eye
+  frame = locateEyes(frame);
+  set(himage, 'cdata', frame);
