@@ -1,4 +1,7 @@
-function outputImage = markEyes(image)
+function [outputImage, bbox, center] = markEyes(image)
   rightEyeLocation = detectEye(image, 'Right');
-  outputImage = markEyeCenter(image, rightEyeLocation);
+  data = markEyeCenter(image, rightEyeLocation);
+  outputImage = data.image;
+  bbox = data.bbox;
+  center = data.center;
 end

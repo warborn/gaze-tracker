@@ -22,7 +22,7 @@ function varargout = main(varargin)
 
 % Edit the above text to modify the response to help main
 
-% Last Modified by GUIDE v2.5 19-Nov-2017 22:00:17
+% Last Modified by GUIDE v2.5 20-Nov-2017 21:51:19
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -67,6 +67,23 @@ set(findobj(gcf, 'type', 'axes'), 'xtick', [], 'ytick', []);
 % Show an image of a person initially on the webcam axes
 showPlaceholder(handles.webcamAxes);
 
+% Import Java Robot class for mouse cursor manipulation
+import java.awt.Robot;
+mouse = Robot;
+handles.mouse = mouse;
+
+% Get laptop's screen width and height
+screenSize = get(0, 'screensize');
+handles.screenWidth = screenSize(3);
+handles.screenHeight = screenSize(4);
+
+% Set cursor default speed to two pixels per movement
+handles.speed = get(handles.cursorSpeedSlider, 'Value');
+
+handles.currentPoint = struct;
+
+% Save new handles properties
+guidata(hObject, handles);
 
 % --- Outputs from this function are returned to the command line.
 function varargout = main_OutputFcn(hObject, eventdata, handles) 
@@ -87,7 +104,7 @@ function startTrackingButton_Callback(hObject, eventdata, handles)
 resolution = [640, 480];
 videoStream = getVideoStream(resolution);
 
-streamVideo(videoStream, resolution, handles.webcamAxes);
+streamVideo(videoStream, resolution, hObject);
 
 handles.videoStream = videoStream;
 guidata(hObject, handles);
@@ -100,3 +117,29 @@ function stopTrackingButton_Callback(hObject, eventdata, handles)
 stopVideoStream(handles.videoStream);
 
 showPlaceholder(handles.webcamAxes);
+
+
+% --- Executes on slider movement.
+function cursorSpeedSlider_Callback(hObject, eventdata, handles)
+% hObject    handle to cursorSpeedSlider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+% Change cursor default speed
+handles.speed = get(handles.cursorSpeedSlider, 'Value');
+guidata(hObject, handles);
+
+
+% --- Executes during object creation, after setting all properties.
+function cursorSpeedSlider_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to cursorSpeedSlider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
