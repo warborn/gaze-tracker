@@ -22,7 +22,7 @@ function varargout = main(varargin)
 
 % Edit the above text to modify the response to help main
 
-% Last Modified by GUIDE v2.5 26-Nov-2017 22:28:05
+% Last Modified by GUIDE v2.5 26-Nov-2017 22:51:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -89,6 +89,9 @@ handles.directionDownImage = imread('img/down.jpg');
 handles.directionLeftImage = imread('img/left.jpg');
 handles.directionRightImage = imread('img/right.jpg');
 
+% Set default Gaze Option to 'Center'
+handles.gazeOption = 'center';
+
 % Save new handles properties
 guidata(hObject, handles);
 
@@ -152,19 +155,20 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 end
 
 
-% --- Executes on button press in eyeRadioButton.
-function eyeRadioButton_Callback(hObject, eventdata, handles)
-% hObject    handle to eyeRadioButton (see GCBO)
+% --- Executes when selected object is changed in gazeOptionsUIbuttongroup.
+function gazeOptionsUIbuttongroup_SelectionChangedFcn(hObject, eventdata, handles)
+% hObject    handle to the selected object in gazeOptionsUIbuttongroup 
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+radioButtonName = get(eventdata.NewValue, 'Tag');
+radioButtonName
+switch radioButtonName
+  case 'centerRadiobutton'
+    handles.gazeOption = 'center';
+  case 'centerSpaceRadiobutton'
+    handles.gazeOption = 'center & space';
+  case 'thresholdRadiobutton'
+    handles.gazeOption = 'threshold';
+end
 
-% Hint: get(hObject,'Value') returns toggle state of eyeRadioButton
-
-
-% --- Executes on button press in eyeRadioButton.
-function radiobutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to eyeRadioButton (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of eyeRadioButton
+guidata(hObject, handles);

@@ -1,4 +1,4 @@
-function [data] = markEyeCenter(image, bbox)
+function [data] = markEyeCenter(image, bbox, handles)
   data = {};  
   data.image = image;
   data.bbox = [];
@@ -31,8 +31,10 @@ function [data] = markEyeCenter(image, bbox)
     bx2 = midX + space + 3;
     by1 = midY - space;
     by2 = midY + space - 3;
-
-    data.image(by1:by2, bx1:bx2, 2) = 255;
+    
+    if strcmp(handles.gazeOption, 'center & space')
+      data.image(by1:by2, bx1:bx2, 2) = 255;
+    end
     data.bbox = [bx1, by1, bx2, by2];
     % outputImage(midY - space: midY + space, midX - space:midX + space, 2) = 255;
 
@@ -42,8 +44,10 @@ function [data] = markEyeCenter(image, bbox)
       center = centers(1, :) + [x1, y1 - adjustY];
       center = round(center);
       data.center = [center(1), center(2)];
-      data.image(center(2) - 1 : center(2) + 1, center(1) - 7 : center(1) + 7, 1) = 255;
-      data.image(center(2) - 7 : center(2) + 7, center(1) - 1 : center(1) + 1, 1) = 255;
+      if strcmp(handles.gazeOption, 'center') || strcmp(handles.gazeOption, 'center & space')
+        data.image(center(2) - 1 : center(2) + 1, center(1) - 7 : center(1) + 7, 1) = 255;
+        data.image(center(2) - 7 : center(2) + 7, center(1) - 1 : center(1) + 1, 1) = 255;
+      end
     end
   end
 end

@@ -9,13 +9,14 @@ end
 function func = formatVideo(hObject)
   function prepareVideo(obj, event, himage)
     handles = guidata(ancestor(hObject, 'figure') );
-    handles.speed
+    handles.gazeOption
+
     % Rotate frame
     frame = flip(event.Data, 2);
     % Crop frame
     frame = frame(:, 80:560, :);
     % Place a mark arround each detected eye
-    [markedImage, bbox, center] = locateEyes(frame);
+    [markedImage, bbox, center] = locateEyes(frame, handles);
     % Transmit image
     set(himage, 'cdata', markedImage);
 
