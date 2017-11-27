@@ -92,6 +92,11 @@ handles.directionRightImage = imread('img/right.jpg');
 % Set default Gaze Option to 'Center'
 handles.gazeOption = 'center';
 
+background = imread('img/background.jpg');
+% Set background
+set(handles.backgroundAxes, 'Visible', 'off');
+image(background, 'Parent', handles.backgroundAxes);
+
 % Save new handles properties
 guidata(hObject, handles);
 
