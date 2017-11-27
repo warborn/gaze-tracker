@@ -22,7 +22,7 @@ function varargout = main(varargin)
 
 % Edit the above text to modify the response to help main
 
-% Last Modified by GUIDE v2.5 20-Nov-2017 21:51:19
+% Last Modified by GUIDE v2.5 26-Nov-2017 22:28:05
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -81,6 +81,13 @@ handles.screenHeight = screenSize(4);
 handles.speed = get(handles.cursorSpeedSlider, 'Value');
 
 handles.currentPoint = struct;
+
+% Read direction images
+handles.directionCenterImage = imread('img/center.jpg');
+handles.directionUpImage = imread('img/up.jpg');
+handles.directionDownImage = imread('img/down.jpg');
+handles.directionLeftImage = imread('img/left.jpg');
+handles.directionRightImage = imread('img/right.jpg');
 
 % Save new handles properties
 guidata(hObject, handles);
@@ -143,3 +150,21 @@ function cursorSpeedSlider_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
+
+
+% --- Executes on button press in eyeRadioButton.
+function eyeRadioButton_Callback(hObject, eventdata, handles)
+% hObject    handle to eyeRadioButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of eyeRadioButton
+
+
+% --- Executes on button press in eyeRadioButton.
+function radiobutton2_Callback(hObject, eventdata, handles)
+% hObject    handle to eyeRadioButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of eyeRadioButton

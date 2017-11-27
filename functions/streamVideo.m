@@ -19,6 +19,9 @@ function func = formatVideo(hObject)
     % Transmit image
     set(himage, 'cdata', markedImage);
 
+    axes(handles.directionImageAxes)
+    imshow(handles.directionCenterImage);
+
     % Check if there was an eye on the image
     if ~isempty(bbox) && ~isempty(center) && ~hasDirection(bbox, center, 'center')
       makeMouseMovement(bbox, center, handles)
