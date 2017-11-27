@@ -9,7 +9,6 @@ end
 function func = formatVideo(hObject)
   function prepareVideo(obj, event, himage)
     handles = guidata(ancestor(hObject, 'figure') );
-    handles.gazeOption
 
     % Rotate frame
     frame = flip(event.Data, 2);

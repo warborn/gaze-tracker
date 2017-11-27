@@ -161,7 +161,7 @@ function gazeOptionsUIbuttongroup_SelectionChangedFcn(hObject, eventdata, handle
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 radioButtonName = get(eventdata.NewValue, 'Tag');
-radioButtonName
+
 switch radioButtonName
   case 'centerRadiobutton'
     handles.gazeOption = 'center';
