@@ -61,28 +61,31 @@ guidata(hObject, handles);
 % UIWAIT makes main wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
-% Remove existent axis from axes
+% Remove existent axis from all axes
 set(findobj(gcf, 'type', 'axes'), 'xtick', [], 'ytick', []);
 
 % Show an image of a person initially on the webcam axes
 showPlaceholder(handles.webcamAxes);
 
 % Import Java Robot class for mouse cursor manipulation
+% and create an instance
 import java.awt.Robot;
 mouse = Robot;
 handles.mouse = mouse;
 
 % Get laptop's screen width and height
 screenSize = get(0, 'screensize');
+% Store dimensions on handles
 handles.screenWidth = screenSize(3);
 handles.screenHeight = screenSize(4);
 
 % Set cursor default speed to two pixels per movement
 handles.speed = get(handles.cursorSpeedSlider, 'Value');
 
+% Set currentPoint to an empty struct
 handles.currentPoint = struct;
 
-% Read direction images
+% Read the images that indicate the directions
 handles.directionCenterImage = imread('img/center.jpg');
 handles.directionUpImage = imread('img/up.jpg');
 handles.directionDownImage = imread('img/down.jpg');
@@ -92,8 +95,9 @@ handles.directionRightImage = imread('img/right.jpg');
 % Set default Gaze Option to 'Center'
 handles.gazeOption = 'center';
 
+% Read backgrund image
 background = imread('img/background.jpg');
-% Set background
+% Show background image over the background axes
 set(handles.backgroundAxes, 'Visible', 'off');
 image(background, 'Parent', handles.backgroundAxes);
 
@@ -116,11 +120,16 @@ function startTrackingButton_Callback(hObject, eventdata, handles)
 % hObject    handle to startTrackingButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+% Specify a resolution for the webcam streaming
 resolution = [640, 480];
+% Create a video object
 videoStream = getVideoStream(resolution);
 
+% Start webcam streaming
 streamVideo(videoStream, resolution, hObject);
 
+% Store video object
 handles.videoStream = videoStream;
 guidata(hObject, handles);
 
@@ -129,8 +138,11 @@ function stopTrackingButton_Callback(hObject, eventdata, handles)
 % hObject    handle to stopTrackingButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+% Stop the webcam streaming
 stopVideoStream(handles.videoStream);
 
+% Show the placeholder image again
 showPlaceholder(handles.webcamAxes);
 
 
@@ -143,7 +155,7 @@ function cursorSpeedSlider_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
-% Change cursor default speed
+% Change the default cursor speed
 handles.speed = get(handles.cursorSpeedSlider, 'Value');
 guidata(hObject, handles);
 
@@ -165,8 +177,11 @@ function gazeOptionsUIbuttongroup_SelectionChangedFcn(hObject, eventdata, handle
 % hObject    handle to the selected object in gazeOptionsUIbuttongroup 
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+% Get the selected Display Gaze Option
 radioButtonName = get(eventdata.NewValue, 'Tag');
 
+% Store the selected Dysplay Gaze Option using handles
 switch radioButtonName
   case 'centerRadiobutton'
     handles.gazeOption = 'center';
