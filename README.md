@@ -3,7 +3,7 @@
 Gaze Tracker is an application to detect in real time the location of the gaze of a person and later move the cursor of the computer in the corresponding direction.
 
 <p align="center">
-  <img src="https://im2.ezgif.com/tmp/ezgif-2-d75da614ba.gif" alt="Gif of the application working" width="300">
+  <img src="https://s20.postimg.org/eyyny3lql/demo.gif" alt="Gif of the application working" width="300">
 </p>
 
 ### Features
